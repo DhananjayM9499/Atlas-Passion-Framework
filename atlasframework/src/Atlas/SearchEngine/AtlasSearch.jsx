@@ -46,6 +46,20 @@ const AtlasSearch = () => {
     );
   };
 
+  const highlightText = (text, query) => {
+    if (!query) return text; // Return the original text if no query
+    const regex = new RegExp(`(${query})`, "gi"); // Create a regular expression to match the query
+    return text.split(regex).map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} className="highlight">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
     <div>
       <Navbar />
@@ -144,33 +158,46 @@ const AtlasSearch = () => {
                   onClick={() => toggleContent(index)}
                   style={{ cursor: "pointer" }}
                 >
-                  {jsonData.title || ""}
+                  {highlightText(jsonData.title || "", searchQuery)}
                 </h1>
 
                 {/* Show content only if showContent is true */}
                 {result.showContent && (
                   <div>
                     {/* Description */}
-                    <p>{jsonData.description || ""}</p>
+                    <p>
+                      {highlightText(jsonData.description || "", searchQuery)}
+                    </p>
 
                     {/* Sections */}
                     {jsonData.sections &&
                       jsonData.sections.map((section, sectionIndex) => (
                         <div key={sectionIndex}>
                           {/* Section Title */}
-                          <h2>{section.title || section.name || ""}</h2>
+                          <h2>
+                            {highlightText(
+                              section.title || section.name || "",
+                              searchQuery
+                            )}
+                          </h2>
 
                           {/* Dimensions */}
                           {section.dimensions &&
                             section.dimensions.map((dimension, dimIndex) => (
                               <div key={dimIndex}>
                                 <h3>
-                                  {dimension.name || dimension.dimension || ""}
+                                  {highlightText(
+                                    dimension.name || dimension.dimension || "",
+                                    searchQuery
+                                  )}
                                 </h3>
                                 <p>
-                                  {dimension.description ||
-                                    dimension.content ||
-                                    ""}
+                                  {highlightText(
+                                    dimension.description ||
+                                      dimension.content ||
+                                      "",
+                                    searchQuery
+                                  )}
                                 </p>
 
                                 {/* Sub-Dimensions */}
@@ -178,8 +205,18 @@ const AtlasSearch = () => {
                                   dimension.sub_dimensions.map(
                                     (subdimension, subdimIndex) => (
                                       <div key={subdimIndex}>
-                                        <h4>{subdimension.name || ""}</h4>
-                                        <p>{subdimension.description || ""}</p>
+                                        <h4>
+                                          {highlightText(
+                                            subdimension.name || "",
+                                            searchQuery
+                                          )}
+                                        </h4>
+                                        <p>
+                                          {highlightText(
+                                            subdimension.description || "",
+                                            searchQuery
+                                          )}
+                                        </p>
                                       </div>
                                     )
                                   )}
@@ -190,7 +227,12 @@ const AtlasSearch = () => {
                           {section.subsections &&
                             section.subsections.map((subsection, subIndex) => (
                               <div key={subIndex}>
-                                <h3>{subsection.category || ""}</h3>
+                                <h3>
+                                  {highlightText(
+                                    subsection.category || "",
+                                    searchQuery
+                                  )}
+                                </h3>
 
                                 {/* Sub-dimensions for subsections */}
                                 {subsection.subdimensions &&
@@ -198,9 +240,17 @@ const AtlasSearch = () => {
                                     (subdimension, subdimIndex) => (
                                       <div key={subdimIndex}>
                                         <h4>
-                                          {subdimension.subdimension || ""}
+                                          {highlightText(
+                                            subdimension.subdimension || "",
+                                            searchQuery
+                                          )}
                                         </h4>
-                                        <p>{subdimension.content || ""}</p>
+                                        <p>
+                                          {highlightText(
+                                            subdimension.content || "",
+                                            searchQuery
+                                          )}
+                                        </p>
                                       </div>
                                     )
                                   )}
@@ -210,10 +260,18 @@ const AtlasSearch = () => {
                           {section.domains &&
                             section.domains.map((domain, domainIndex) => (
                               <div key={domainIndex}>
-                                <h3>{domain.name || "No domain name"}</h3>
+                                <h3>
+                                  {highlightText(
+                                    domain.name || "No domain name",
+                                    searchQuery
+                                  )}
+                                </h3>
                                 <p>
-                                  {domain.description ||
-                                    "No domain description available."}
+                                  {highlightText(
+                                    domain.description ||
+                                      "No domain description available.",
+                                    searchQuery
+                                  )}
                                 </p>
                               </div>
                             ))}
@@ -223,7 +281,12 @@ const AtlasSearch = () => {
                               <h2>
                                 <strong>Conclusion:</strong>
                               </h2>
-                              <p>{section.conclusion || "No conclusion."}</p>
+                              <p>
+                                {highlightText(
+                                  section.conclusion || "No conclusion.",
+                                  searchQuery
+                                )}
+                              </p>
                             </div>
                           )}
                         </div>

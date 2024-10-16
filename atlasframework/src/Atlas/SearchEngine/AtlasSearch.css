@@ -2,6 +2,10 @@ body {
   margin: 0;
   color: #fa6125;
 }
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}
 
 .header {
   position: relative;
