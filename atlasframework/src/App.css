@@ -1,3 +1,9 @@
 body {
   font-family: "Poppins"; /* Set your desired font family */
 }
+.app-container {
+  /* Light grayish-blue, adjust as needed */
+  min-height: 100vh; /* Ensure background color covers full viewport height */
+
+  box-sizing: border-box;
+}

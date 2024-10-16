@@ -1,15 +1,15 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AtlasSearch from "./Atlas/SearchEngine/AtlasSearch";
-import About from "./Atlas/Component/About";
+import About from "./Atlas/About/About";
 
 function App() {
   return (
-    <div>
+    <div className="app-container">
       <Router>
         <Routes>
           <Route path="/" element={<AtlasSearch />} />
-          <Route path="/aboutUs" element={<About />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
     </div>

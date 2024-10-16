@@ -5,7 +5,6 @@ body {
 
 .header {
   position: relative;
-  text-align: center;
 
   background-image: url("../Images/atlas-bg.png");
   background-repeat: no-repeat;
@@ -84,7 +83,7 @@ p {
 button {
   border: none;
   height: 45px;
-  background-color: #fa713b;
+  background-color: #e37d34;
   color: #fff;
   width: 110px;
   border-radius: 50px;
@@ -136,7 +135,7 @@ button {
   border-radius: 10px;
 }
 .btn-signup {
-  background-color: #fa713b;
+  background-color: #e37d34;
   color: white !important;
   max-width: 400px;
 }
@@ -146,6 +145,7 @@ button {
   align-items: center;
   background-color: transparent;
   color: #fff;
+  height: 80px;
 }
 
 .atlas-logo {

@@ -57,14 +57,14 @@ const AtlasSearch = () => {
               style={{
                 color: "#e50000",
                 textAlign: "start",
-                marginLeft: "50px",
+                marginLeft: "15px",
               }}
             >
               The Future of Knowledge, Insight and Innovation
             </h3>
-            <div>
+            <div style={{ marginLeft: "15px" }}>
               <input
-                className="search-bar"
+                className="search-bar mr-1"
                 type="text"
                 placeholder="Search..."
                 value={searchQuery}
@@ -99,7 +99,8 @@ const AtlasSearch = () => {
           </div>
 
           <div className="content-section header_container">
-            <h2>PASSION Framework - Data’s Role Across Dimensions</h2>
+            <h2>PASSION Framework:</h2>
+            <h4>Data’s Role Across Dimensions</h4>
             <div>
               <p>
                 <strong>Probing:</strong> Data is the starting point for inquiry
@@ -109,7 +110,8 @@ const AtlasSearch = () => {
           </div>
 
           <div className="content-section header_container">
-            <h2>PRUTL Dimensions: Data's Ethical Impact</h2>
+            <h2>PRUTL Dimensions: </h2>
+            <h4>Data's Ethical Impact</h4>
             <p>
               <strong>Positive Soul:</strong> Data fosters trust in
               institutions...

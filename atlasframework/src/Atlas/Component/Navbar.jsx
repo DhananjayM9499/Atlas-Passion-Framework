@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../Images/Atlas.png";
 const Navbar = () => {
   return (
-    <div>
+    <div style={{ backgroundColor: " #fcf9f0" }}>
       <header className="atlas-header">
         <div className="atlas-logo">
           <img src={logo} width="180px" height="110px" alt="No " />
@@ -10,16 +10,15 @@ const Navbar = () => {
         <nav className="atlas-nav">
           <ul>
             <li style={{ marginTop: "6px" }}>
-              \
               <b>
                 {" "}
-                <a style={{ color: "black" }} href="/aboutUs">
+                <a style={{ color: "black" }} href="/about">
                   About Us
                 </a>
               </b>
             </li>
             <li>
-              <button style={{ height: "35px" }}>
+              <button style={{ height: "35px", borderRadius: "5px" }}>
                 {" "}
                 <a href="/">
                   <b>Login</b>
