@@ -12,7 +12,7 @@ const AtlasSearch = () => {
 
   const handleSearch = () => {
     fetch(
-      `http://162.241.120.254/:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`
+      `http://162.241.120.254:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`
     )
       .then((response) => response.json())
       .then((data) => {
