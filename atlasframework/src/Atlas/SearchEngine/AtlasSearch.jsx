@@ -12,7 +12,7 @@ const AtlasSearch = () => {
 
   const handleSearch = () => {
     fetch(
-      `http://localhost:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`
+      `http://162.241.120.254/:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -84,7 +84,10 @@ const AtlasSearch = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button onClick={handleSearch}>
+              <button
+                style={{ height: "45px", borderRadius: "5px" }}
+                onClick={handleSearch}
+              >
                 <b>Search</b>
               </button>
             </div>
