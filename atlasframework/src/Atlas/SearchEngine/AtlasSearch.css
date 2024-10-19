@@ -67,11 +67,9 @@ p {
 
 .vertical-center {
   margin: 0;
-
+  flex: 0 0 70%;
   top: 50%;
   left: 50%;
-
-  max-width: 800px;
 }
 
 .search-bar {
