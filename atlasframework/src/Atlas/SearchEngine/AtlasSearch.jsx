@@ -12,8 +12,8 @@ const AtlasSearch = () => {
 
   const handleSearch = () => {
     fetch(
-      //  `http://localhost:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`,
-      `https://audit.passionit.com:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`,
+      `http://localhost:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`,
+      //  `https://audit.passionit.com:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`,
       {}
     )
       .then((response) => response.json())
