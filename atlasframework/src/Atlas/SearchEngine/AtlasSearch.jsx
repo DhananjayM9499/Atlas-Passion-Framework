@@ -3,6 +3,7 @@ import "./AtlasSearch.css"; // Assuming you create a CSS file for styles
 import Navbar from "../Component/Navbar";
 import welcome from "../Images/welcome.png";
 import Image from "../Images/homeImage.png";
+import * as API from "../Endpoint/Endpoint";
 
 const AtlasSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,8 +13,8 @@ const AtlasSearch = () => {
 
   const handleSearch = () => {
     fetch(
-      //   `http://localhost:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`,
-      `https://audit.passionit.com:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`,
+      `${API.CLIENT_URL}/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`,
+      //  `https://atlas.passionit.com:8983/solr/research/select?indent=true&q.op=OR&q=${searchQuery}&useParams=`,
       {}
     )
       .then((response) => response.json())
@@ -51,15 +52,7 @@ const AtlasSearch = () => {
   const highlightText = (text, query) => {
     if (!query) return text; // Return the original text if no query
     const regex = new RegExp(`(${query})`, "gi"); // Create a regular expression to match the query
-    return text.split(regex).map((part, index) =>
-      regex.test(part) ? (
-        <span key={index} className="highlight">
-          {part}
-        </span>
-      ) : (
-        part
-      )
-    );
+    return text.replace(regex, "<span class='highlight'>$1</span>"); // Wrap matching text with <span>
   };
 
   return (
@@ -127,66 +120,84 @@ const AtlasSearch = () => {
                 <h1
                   onClick={() => toggleContent(index)}
                   style={{ cursor: "pointer" }}
-                >
-                  {highlightText(jsonData.title || "", searchQuery)}
-                </h1>
+                  dangerouslySetInnerHTML={{
+                    __html: highlightText(jsonData.title || "", searchQuery),
+                  }}
+                ></h1>
 
                 {/* Show content only if showContent is true */}
                 {result.showContent && (
                   <div>
                     {/* Description */}
-                    <p>
-                      {highlightText(jsonData.description || "", searchQuery)}
-                    </p>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: highlightText(
+                          jsonData.description || "",
+                          searchQuery
+                        ),
+                      }}
+                    ></div>
 
                     {/* Sections */}
                     {jsonData.sections &&
                       jsonData.sections.map((section, sectionIndex) => (
                         <div key={sectionIndex}>
                           {/* Section Title */}
-                          <h2>
-                            {highlightText(
-                              section.title || section.name || "",
-                              searchQuery
-                            )}
-                          </h2>
+                          <h2
+                            dangerouslySetInnerHTML={{
+                              __html: highlightText(
+                                section.title || section.name || "",
+                                searchQuery
+                              ),
+                            }}
+                          ></h2>
 
                           {/* Dimensions */}
                           {section.dimensions &&
                             section.dimensions.map((dimension, dimIndex) => (
                               <div key={dimIndex}>
-                                <h3>
-                                  {highlightText(
-                                    dimension.name || dimension.dimension || "",
-                                    searchQuery
-                                  )}
-                                </h3>
-                                <p>
-                                  {highlightText(
-                                    dimension.description ||
-                                      dimension.content ||
-                                      "",
-                                    searchQuery
-                                  )}
-                                </p>
+                                <h3
+                                  dangerouslySetInnerHTML={{
+                                    __html: highlightText(
+                                      dimension.name ||
+                                        dimension.dimension ||
+                                        "",
+                                      searchQuery
+                                    ),
+                                  }}
+                                ></h3>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html: highlightText(
+                                      dimension.description ||
+                                        dimension.content ||
+                                        "",
+                                      searchQuery
+                                    ),
+                                  }}
+                                ></p>
 
                                 {/* Sub-Dimensions */}
                                 {dimension.sub_dimensions &&
                                   dimension.sub_dimensions.map(
                                     (subdimension, subdimIndex) => (
                                       <div key={subdimIndex}>
-                                        <h4>
-                                          {highlightText(
-                                            subdimension.name || "",
-                                            searchQuery
-                                          )}
-                                        </h4>
-                                        <p>
-                                          {highlightText(
-                                            subdimension.description || "",
-                                            searchQuery
-                                          )}
-                                        </p>
+                                        <h4
+                                          dangerouslySetInnerHTML={{
+                                            __html: highlightText(
+                                              subdimension.name || "",
+                                              searchQuery
+                                            ),
+                                          }}
+                                        ></h4>
+                                        <p
+                                          dangerouslySetInnerHTML={{
+                                            __html: highlightText(
+                                              subdimension.description || "",
+                                              searchQuery
+                                            ),
+                                          }}
+                                        ></p>
                                       </div>
                                     )
                                   )}
@@ -197,66 +208,80 @@ const AtlasSearch = () => {
                           {section.subsections &&
                             section.subsections.map((subsection, subIndex) => (
                               <div key={subIndex}>
-                                <h3>
-                                  {highlightText(
-                                    subsection.category || "",
-                                    searchQuery
-                                  )}
-                                </h3>
+                                <h3
+                                  dangerouslySetInnerHTML={{
+                                    __html: highlightText(
+                                      subsection.category || "",
+                                      searchQuery
+                                    ),
+                                  }}
+                                ></h3>
 
                                 {/* Sub-dimensions for subsections */}
                                 {subsection.subdimensions &&
                                   subsection.subdimensions.map(
                                     (subdimension, subdimIndex) => (
                                       <div key={subdimIndex}>
-                                        <h4>
-                                          {highlightText(
-                                            subdimension.subdimension || "",
-                                            searchQuery
-                                          )}
-                                        </h4>
-                                        <p>
-                                          {highlightText(
-                                            subdimension.content || "",
-                                            searchQuery
-                                          )}
-                                        </p>
+                                        <h4
+                                          dangerouslySetInnerHTML={{
+                                            __html: highlightText(
+                                              subdimension.subdimension || "",
+                                              searchQuery
+                                            ),
+                                          }}
+                                        ></h4>
+                                        <p
+                                          dangerouslySetInnerHTML={{
+                                            __html: highlightText(
+                                              subdimension.content || "",
+                                              searchQuery
+                                            ),
+                                          }}
+                                        ></p>
                                       </div>
                                     )
                                   )}
                               </div>
                             ))}
+
                           {/* Domains */}
                           {section.domains &&
                             section.domains.map((domain, domainIndex) => (
                               <div key={domainIndex}>
-                                <h3>
-                                  {highlightText(
-                                    domain.name || "No domain name",
-                                    searchQuery
-                                  )}
-                                </h3>
-                                <p>
-                                  {highlightText(
-                                    domain.description ||
-                                      "No domain description available.",
-                                    searchQuery
-                                  )}
-                                </p>
+                                <h3
+                                  dangerouslySetInnerHTML={{
+                                    __html: highlightText(
+                                      domain.name || "No domain name",
+                                      searchQuery
+                                    ),
+                                  }}
+                                ></h3>
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html: highlightText(
+                                      domain.description ||
+                                        "No domain description available.",
+                                      searchQuery
+                                    ),
+                                  }}
+                                ></p>
                               </div>
                             ))}
+
                           {/* Conclusion */}
                           {section.conclusion && (
                             <div>
                               <h2>
                                 <strong>Conclusion:</strong>
                               </h2>
-                              <p>
-                                {highlightText(
-                                  section.conclusion || "No conclusion.",
-                                  searchQuery
-                                )}
-                              </p>
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html: highlightText(
+                                    section.conclusion || "No conclusion.",
+                                    searchQuery
+                                  ),
+                                }}
+                              ></p>
                             </div>
                           )}
                         </div>

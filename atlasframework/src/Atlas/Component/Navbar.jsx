@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import logo from "../Images/Atlas.png";
-
+import { IoLogOutOutline } from "react-icons/io5";
+import { MdManageAccounts } from "react-icons/md";
+import { IconContext } from "react-icons";
+import { VscAccount } from "react-icons/vsc";
+import "./Navbar.css";
 const Navbar = () => {
   const location = useLocation();
   const [username, setUsername] = useState("");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
   const navigate = useNavigate();
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -24,10 +30,29 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+    setIsDropdownOpen((prevState) => !prevState); // Toggle state
   };
 
-  const handleLogout = () => {
+  // Close the dropdown if the user clicks outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleProfileClick = () => {
+    // Navigate to the profile page
+    navigate("/profile"); // Adjust the path as needed
+  };
+
+  const handleLogoutClick = () => {
     sessionStorage.removeItem("token");
     setUsername("");
     navigate("/");
@@ -66,44 +91,51 @@ const Navbar = () => {
               )}
             {/* Show the username if the user is authenticated */}
             {username && (
-              <li style={{ marginTop: "6px", color: "black" }}>
-                <b onClick={toggleDropdown} style={{ cursor: "pointer" }}>
-                  Welcome, {username}
-                </b>
-                {dropdownOpen && (
-                  <ul
-                    className="dropdown-menu"
-                    style={{
-                      position: "absolute",
-                      backgroundColor: "#fff",
-                      border: "1px solid #ccc",
-                      listStyle: "none",
-                      padding: "10px",
-                      margin: "0",
-                      zIndex: 100,
-                    }}
-                  >
-                    <li>
-                      <Link to="/" onClick={() => setDropdownOpen(false)}>
-                        Home
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleLogout}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          color: "blue",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
+              <div
+                className="account-section"
+                onClick={toggleDropdown}
+                ref={dropdownRef}
+              >
+                <div className="header_div">
+                  <div className="mr-2">
+                    {" "}
+                    {/* Account icon and dropdown toggle */}
+                    <IconContext.Provider
+                      value={{ size: 24, color: "#ff3131" }}
+                    >
+                      <VscAccount />
+                    </IconContext.Provider>{" "}
+                  </div>
+
+                  <div>
+                    {" "}
+                    <span className="email-text mr-4 text-dark font-weight-bold align-middle">
+                      {username}
+                    </span>
+                  </div>
+                </div>
+
+                {isDropdownOpen && (
+                  <div className="dropdown-menu show mt-2">
+                    {" "}
+                    {/* Add show class conditionally */}
+                    <div className="dropdown-item" onClick={handleProfileClick}>
+                      Profile{" "}
+                      <MdManageAccounts
+                        size={24}
+                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                      />
+                    </div>
+                    <div className="dropdown-item" onClick={handleLogoutClick}>
+                      Logout{" "}
+                      <IoLogOutOutline
+                        size={24}
+                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                      />
+                    </div>
+                  </div>
                 )}
-              </li>
+              </div>
             )}
           </ul>
         </nav>

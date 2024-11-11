@@ -5,7 +5,7 @@ import About from "./Atlas/About/About";
 import Login from "./Atlas/Auth/Login";
 import Signup from "./Atlas/Auth/Signup";
 import VerifyOTP from "./Atlas/Auth/VerifyOTP";
-import Home from "./Atlas/Component/Home";
+import User from "./Atlas/User/User";
 import { ToastContainer } from "react-toastify";
 import {
   PrivateRoute,
@@ -13,6 +13,7 @@ import {
   AdminRoute,
 } from "./Atlas/Routes/PrivateRoute";
 import Admin from "./Atlas/Admin/Admin";
+import UserComponent from "./Atlas/User/UserComponent";
 
 function App() {
   return (
@@ -34,7 +35,15 @@ function App() {
             path="/user"
             element={
               <UserRoute>
-                <Home />
+                <User />
+              </UserRoute>
+            }
+          />
+          <Route
+            path="/data"
+            element={
+              <UserRoute>
+                <UserComponent />
               </UserRoute>
             }
           />

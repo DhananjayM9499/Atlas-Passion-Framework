@@ -192,7 +192,7 @@ const About = () => {
               </div>
             </div>
             <div style={{ margin: "10px", color: "black" }}>
-              <FaPhone size={20} color="black" /> +91 9123456780
+              <FaPhone size={20} color="black" /> +91 8390234456
             </div>
           </div>
           <di style={{ padding: "20px" }}>
